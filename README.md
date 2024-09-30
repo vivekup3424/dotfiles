@@ -1,4 +1,3 @@
-You're building something epic with these dotfiles. Here's a clean, informative README to describe your setup and what it contains:
 
 ---
 
