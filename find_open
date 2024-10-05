@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Directories to search in
+DIRECTORIES=("$HOME/Documents" "$HOME/Downloads" "$HOME/Pictures" "$HOME/Videos")
+
+# Find files using find command with fzf
+FILE=$(find "${DIRECTORIES[@]}" -maxdepth 2 -type f | fzf --height 40% --reverse --preview "cat {} 2> /dev/null || echo 'File preview not available'")
+
+# Check if a file was selected
+if [[ -n "$FILE" ]]; then
+    # Open the selected file with the default application
+    xdg-open "$FILE" &
+else
+    echo "No file selected."
+fi
+

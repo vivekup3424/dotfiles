@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Directories to search in
+DIRECTORIES=("$HOME/Documents" "$HOME/Downloads" "$HOME/Documents/Books")
+
+# Find PDF files using find command with fzf
+BOOK=$(find "${DIRECTORIES[@]}" -maxdepth 2 -type f -iname "*.pdf" | fzf --height 40% --reverse --preview "evince {} &")
+
+# Check if a book was selected
+if [[ -n "$BOOK" ]]; then
+    # Open the selected book with evince
+    evince "$BOOK" &
+else
+    echo "No book selected."
+fi
+

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Find the session directory
+session=$(find ~/Documents ~/Documents/Projects/ ~/Coding_Problems/ -mindepth 0 -maxdepth 3 -type d | fzf)
+
+# Convert session directory name
+session_name=$(basename "$session" | tr . _)
+
+# Check if the tmux session exists
+if ! tmux has-session -t "$session_name" 2>/dev/null; then
+    # Create a new tmux session if it doesn't exist
+    tmux new-session -s "$session_name" -c "$session" -d
+fi
+
+# Switch to the tmux session
+tmux switch-client -t "$session_name"
