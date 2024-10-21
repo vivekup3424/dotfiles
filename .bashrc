@@ -103,13 +103,11 @@ fi
 
 # Additional completion for common tools
 complete -o default -o nospace -F _git git
-complete -o default -o nospace -F _kubectl kubectl
 
 # Export paths
 export PATH="$PATH:/usr/local/go/bin:/usr/lib/postgresql/14/bin:/usr/local/go/:/home/vivekup3424/.local/bin"
-
-# Source kubectl completion
-source <(kubectl completion bash)
+export JAVA_HOME=/usr/java/jre1.8.0_421
+export PATH=$JAVA_HOME/bin:$PATH
 
 # NVM settings
 export NVM_DIR="$HOME/.nvm"
@@ -120,6 +118,7 @@ source /etc/profile.d/bash_completion.sh
 # Tmux alias
 alias tmux="tmux -u"
 alias vim="nvim"
+alias obsidian="/usr/bin/Obsidian-1.7.4.AppImage"
 
 # Git branch in prompt
 parse_git_branch() {

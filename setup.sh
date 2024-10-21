@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Install Git if not installed
 if ! command -v git &> /dev/null
 then
@@ -119,4 +118,7 @@ fi
 dconf load /org/gnome/terminal/ < ~/dotfiles/gnome-terminal-settings.dconf
 dconf read /org/gnome/terminal/
 
-
+setting up obsidian
+wget https://github.com/obsidianmd/obsidian-releases/releases/download/v1.7.4/Obsidian-1.7.4.AppImage
+sudo chmod +x Obsidian-1.7.4.AppImage
+sudo mv Obsidian-1.7.4.AppImage /usr/bin/
