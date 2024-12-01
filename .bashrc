@@ -121,9 +121,9 @@ alias vim="nvim"
 alias obsidian="/usr/bin/Obsidian-1.7.4.AppImage"
 
 # Git branch in prompt
-parse_git_branch() {
-    git branch 2> /dev/null | grep '*' | sed 's/* //'
-}
+# parse_git_branch() {
+#     git branch 2> /dev/null | grep '*' | sed 's/* //'
+# }
 
 # Get the name of parent directory till one level
 parent_directory(){
@@ -157,8 +157,22 @@ book(){
 find_open(){
     ~/find_open
 }
-# Improved prompt with Git branch
-PS1='→ \[\e[32m\]$(parent_directory)\[\e[m\] $(if [ -n "$(parse_git_branch)" ]; then echo "\[\e[34m\]git(\[\e[38;5;214m\]$(parse_git_branch)\[\e[34m\])\[\e[m\] "; fi)⚡ '
+# Function to get git branch
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+}
+
+# Main prompt
+PS1='$(if [ $? -eq 0 ]; then
+    echo "\[\e[32m\]✓\[\e[m\] ";
+else
+    echo "\[\e[31m\]✘\[\e[m\] ";
+fi)\
+\[\e[32m\]$(parent_directory)\[\e[m\] \
+$(if [ -n "$(parse_git_branch)" ]; then
+    echo "\[\e[34m\]git(\[\e[38;5;214m\]$(parse_git_branch)\[\e[34m\])\[\e[m\] ";
+fi)\
+⚡ '
 
 # Evaluate brew environment
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
