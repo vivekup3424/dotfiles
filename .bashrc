@@ -161,6 +161,16 @@ find_open(){
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
 }
+play_music() {
+    # Directories to search in
+    local DIRECTORIES=("$HOME/Music")
+
+    # Find music files using find, fzf, and play with mpv
+    find "${DIRECTORIES[@]}" -maxdepth 2 -type f | fzf --prompt="Select a music file: " | while IFS= read -r file; do
+        mpv --no-video "$file"
+    done
+}
+
 
 # Main prompt
 PS1='$(if [ $? -eq 0 ]; then
@@ -168,11 +178,12 @@ PS1='$(if [ $? -eq 0 ]; then
 else
     echo "\[\e[31m\]✘\[\e[m\] ";
 fi)\
-\[\e[32m\]$(parent_directory)\[\e[m\] \
+\[\e[32m\]$(parent_directory)\[\e[m\]\
+\[\e[33m\]@$(hostname)\[\e[m\] \
 $(if [ -n "$(parse_git_branch)" ]; then
     echo "\[\e[34m\]git(\[\e[38;5;214m\]$(parse_git_branch)\[\e[34m\])\[\e[m\] ";
 fi)\
-⚡ '
+'
 
 # Evaluate brew environment
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
